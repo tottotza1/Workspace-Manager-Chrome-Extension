@@ -1,0 +1,26 @@
+{
+
+
+  "web_accessible_resources": [
+  "files/*"
+  ],
+
+  "name": "Workspace Manager!",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "Workspace Chrome extension.",
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "bookmarks"
+  ],
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self' "
+
+}
+
+
