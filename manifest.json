@@ -1,14 +1,20 @@
 {
-
-
   "web_accessible_resources": [
   "files/*"
   ],
 
   "name": "Workspace Manager!",
-  "version": "1.0",
+  "version": "0.5",
   "manifest_version": 2,
-  "description": "Workspace Chrome extension.",
+  "short_name": "Workspace Chrome extension.",
+  "description": "Manage tabs in workspaces and revisit them in the future",
+
+  "icons": {"16": "icon.png"},
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
 
   "browser_action": {
     "default_icon": "icon.png",
@@ -20,6 +26,7 @@
     "bookmarks"
   ],
   "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self' "
+
 
 }
 

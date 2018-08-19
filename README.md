@@ -20,6 +20,9 @@ Done:
 * when opening, put first one in existing tab
 * dialog not disappearing after selecting yes
 * date (or last saved date?)
+* added feedback link
+* added background.js with uninstall callback to feedback
+* added .css 
 
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
