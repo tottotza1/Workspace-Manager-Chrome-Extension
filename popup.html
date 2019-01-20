@@ -1,32 +1,71 @@
 <html>
-<head>
-  <link rel="stylesheet" href="./popup.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="popup.js"></script>
-</head>
-<body style="width: 400px">
-  <div class="table">
-    <div class="left">Search All Tabs: <input id="search"></div>
-    <div class="right"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback</a></div>
-  </div>
+  <head>
+    <!-- Global site tag (gtag.js) - Google Ads: 796233903 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-796233903"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'AW-796233903');
+    </script>
+
+    <!-- Event snippet for DownloadExtension conversion page -->
+    <script>
+      gtag('event', 'conversion', {
+          'send_to': 'AW-796233903/OiMQCPeg2o8BEK-h1vsC',
+          'transaction_id': ''
+      });
+    </script>
   
-  <div id="tabs"></div>
-  <div id="editdialog"></div>
-  <div id="deletedialog"></div>
-  <div>Name the above workspace: <input id="workspace"> <input type="submit" value="Save" id="save"></div>
-  <br/>
-  <div class="table">
-    <div class="left" id='workspaceList'>List of Workspaces</div>
-    <div class="right"><input type="submit" value="Open" id="open"></div>
-  </div>
-  <br/>
-  <div><input type="submit" value="Show all tabs in a new page" id="all"></div>
-  <br/><br/>
- 
-  Are you a fan of this extension? 
-  <div class="ratings">
-    <div class="YesLink"><a href="https://chrome.google.com/webstore/detail/workspace-manager/cpfchfkodgnkhfmndmmkecbihmdahpia/reviews">Yes!</a></div>
-    <div class="NoLink"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">No</a></div>
-  </div>
-</body>
+    <link rel="stylesheet" href="./popup.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="popup.js"></script>
+  </head>
+  
+
+  <body style="width: 400px;overflow:scroll" class="top">    
+    <div class="farright"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div><br/>
+    <div class="table">
+      List of Workspaces:<br/>
+      <div class="selectdiv">
+      <div class="farleft" id='workspaceList'></div></div>
+      <div class="farright"><input class="button" type="submit" value="Open" id="open"></div>
+    </div>
+
+    <div class="listingtitle" id="listingtitle"></div>
+    <div class="middle" id="tabs"></div>
+    <div id="editdialog"></div>
+    <div id="deletedialog"></div>
+    
+    <div class="filler">Name the current Workspace: <br/>
+      <div class="farleft"><input class="inputdiv" id="workspace"></div>
+      <div class="farright"><input class="button" type="submit" value="Save" id="save"></div>
+    </div>
+    
+    <div class="table">
+      Search all saved Workspaces: <br/>
+      <div class="selectdiv">
+      <div class="farleft"><input class="inputdiv" id="search"></div></div>
+      <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
+    </div>
+    
+    <div class="table">
+      <input class="button" type="submit" value="Show All" id="all"> Use to delete workspaces
+    </div>
+
+    <div class="footer">
+      <div class="farleft">Are you a fan? 
+        <div class="ratings">
+          <div class="YesLink">
+            <a href="https://chrome.google.com/webstore/detail/workspace-manager/cpfchfkodgnkhfmndmmkecbihmdahpia/reviews">Yes!</a>
+          </div>
+          <div class="NoLink">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">No</a>
+          </div>
+        </div>
+      </div>
+      <div class="farright"><img src="images/WorkSpace_Icon.png"></div>
+    </div>
+  </body>
 </html>

@@ -1,0 +1,67 @@
+.top { font-family: "Roboto"; font-size: 14px; padding:5px; width:90%; background-color:#10052d; color:white; }
+
+/* unvisited link */
+a:link { color: orange; }
+
+/* visited link */
+a:visited {  color: darkorange;}
+
+/* mouse over link */
+a:hover {  color: ghostwhite;}
+
+/* selected link */
+a:active {  color: blue;}
+
+.dialog {
+    display:none;
+    background-color: ghostwhite;
+    color:black;
+    width: 50px;
+    height: 20px;
+    border: 1px solid black;
+    padding-left: 5px;
+}
+
+.ui-dialog {
+	position: absolute;
+	top: 0;
+	left: 0;
+	padding: .2em;
+	outline: 0;
+}
+.ui-dialog .ui-dialog-titlebar {
+	padding: .4em 1em;
+	position: relative;
+	background-color: #4c1862;
+	color: white;
+}
+.ui-dialog .ui-dialog-titlebar-close {
+	position: absolute;
+	right: .3em;
+	top: 50%;
+	width: 20px;
+	margin: -10px 0 0 0;
+	padding: 1px;
+	height: 20px;
+}
+.ui-dialog .ui-dialog-buttonpane {
+	text-align: left;
+	border-width: 1px 0 0 0;
+	background-image: none;
+	margin-top: .5em;
+	padding: .3em 1em .5em .4em;
+}
+.ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
+	float: right;
+}
+.ui-dialog .ui-dialog-buttonpane button {
+	margin: .5em .4em .5em 0;
+	cursor: pointer;
+	background-color: #4c1862;
+	color: white;
+
+}
+.ui-draggable .ui-dialog-titlebar {
+	cursor: move;
+}
+

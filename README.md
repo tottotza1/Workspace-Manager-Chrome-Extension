@@ -23,18 +23,31 @@ Done:
 * added feedback link
 * added background.js with uninstall callback to feedback
 * added .css 
+* Added conversion tracking
+* Search should actually iterate through saved workspaces
+* Search should not be case sensitive
+* update background logo
+* updated Delete dialog box
+* new design/layout/color scheme
+ 
+* 7.5
+* Removed ovewrwrite of workspace. Must go to Show all and delete first
+* Fixed issue of tabs list clearing after saving workspace
+* Search is no longer case-sensitive
+* Added Created date for workspaces
+* Show created date in show all tabs, if available
+* Add instructions/docs on how to use functionality (specifically deleting Workspaces)
+
 
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
 To Do
-* prevent overwrite of workspace! first just deny, then think through how overwrite should work.
-* select all from drop down
 * change search to search extension lists?
 * show all workspaces in a starter tab
 * Easier way to overwrite an existing workspace
 * Create history of workspaces (for how long?)
-
+* Ability to share a workspace (how?)
 
 
 

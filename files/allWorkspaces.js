@@ -18,25 +18,29 @@ function dumpWorkspace(workspace) {
         span.hover(function () {
         	span.append(options);
         	$('#deletelink').click(function() {
-              $('#deletedialog').empty();
               $('#deletedialog').dialog({
+                 show: {
+                    effect: "blind",
+                    duration: 500
+                 },
+                 hide: {
+                    effect: "explode",
+                    duration: 500
+                 },
                  autoOpen: false,
-                 title: 'Delete Workspace',
                  resizable: false,
-                 height: "auto",
-                 width: "auto",
-                 modal: false,
-                 overlay: {
+                 modal: true,
+                                  overlay: {
                    backgroundColor: '#FFF',
                    //opacity: 0.5
                  },
+                 closeText: 'X',
                  buttons: {
                    'Yes, Delete It!': function() {
                       chrome.storage.sync.remove(workspace, function() {
-                      span.parent().remove();
-                      $(this).dialog('destroy');               	
+                      span.parent().remove();              	
                       });
-
+                      $(this).dialog('destroy'); 
                     },
                     Cancel: function() {
                       $(this).dialog('destroy');
@@ -54,6 +58,10 @@ function dumpWorkspace(workspace) {
 		var div = $('<div>'); //doing this so that 'delete' shows up under title, but then removes bullets as well.
 		div.append(span);
 		div.append(newData[workspace].firstItem);
+    if (newData[workspace].createdDate != undefined ) {
+      div.append('Created: ' + newData[workspace].createdDate + '<br/><br/>');
+    }
+
 		$('#playground').append(div);
 	})
 }
@@ -109,18 +117,19 @@ function dumpTab(tabNode, query) {
       chrome.tabs.create({url: tabNode.url});
     });
 
-    // none of this span stuff is needed currently///
+     // none of this span stuff is needed currently -- RE ADD IF WANT TO ADD OPTIONS DURING HOVERING/ / /
     var span = $('<span>');
-    var options = tabNode.children ?
+    var options = '';
+    /*var options = tabNode.children ?
       $('<span></span>') : //if there are children, then no options
       $('<span>[<a id="editlink" href="#">Edit</a> <a id="deletelink" ' +
-        'href="#">Deleteeee</a>]</span>');
+        'href="#">Deleteeee</a>]</span>'); 
 
     var edit = tabNode.children ? 
       $('<table><tr><td>Name</td><td>' +  // if there are children - not relant for me?
       '<input id="title"></td></tr><tr><td>URL</td><td><input id="url">' +
       '</td></tr></table>') : $('<input>');
-    // Show add and edit links when hover over.
+    // Show add and edit links when hover over.*/
     
     span.hover(function () {
       span.append(options);

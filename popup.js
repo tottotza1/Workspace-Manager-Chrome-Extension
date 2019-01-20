@@ -16,10 +16,10 @@ $(function() {
     });
   $('#save').click(function() {
     saveChanges();
-    $('#tabs').empty();
+    //$('#tabs').empty();
   });
   $('#open').click(function() { // listener for when 'get' is clicked
-    workspaceDropDown = $('#myId').val();
+    workspaceDropDown = $('#workspaceSelection').val();
     console.log(workspaceDropDown);
     chrome.storage.sync.get(workspaceDropDown, function(newData) {
       //console.log(newData);
@@ -57,18 +57,43 @@ function createWorkspaceList() {
     }
     return options;
   })
-  $('#workspaceList').append('<select id=\'myId\'>' + dropdown);
+  $('#workspaceList').append('<select id=\'workspaceSelection\'>' + dropdown);
 }
 
 // retrieves all tabs and then dumps them all into the popup
 function dumpAllTabs(query) {
-  var tabNames = chrome.tabs.getAllInWindow(
-      null, function(tabs) {
-      $('#tabs').append(dumpAllTabsNodes(tabs, query))
-  });
+  if (!query) {  // by default show the open tabs
+   $('#listingtitle').empty();
+   $('#listingtitle').append('<b>OPEN TABS:<b></br>')
+    var tabNames = chrome.tabs.getAllInWindow(
+        null, function(tabs) {
+        $('#tabs').append(dumpAllTabsNodes(tabs, query))
+    });
+   return;
+  } else { //if a search 
+   $('#listingtitle').empty();
+   $('#listingtitle').append('<b>SEARCH RESULTS:<b></br>')
+   var allWorkspaces = chrome.storage.sync.get(
+        null, function(data) {
+          var keys = Object.keys(data);
+          for (var i = 0; i<keys.length;i++) {
+            dumpSearch(keys[i], query);       
+          }
+    });
+  }
 }
 
-// iterates through each tab and calls dumpTab for each
+//show search results for a specified key
+function dumpSearch (currentkey, query) {
+   chrome.storage.sync.get(currentkey, function(newData) {
+    if (newData[currentkey].firstItem.toLowerCase().indexOf(query.toLowerCase()) != -1) {  
+      $('#tabs').append('<b>' + currentkey + '<b>')
+      $('#tabs').append(newData[currentkey].firstItem)
+    }
+   });
+}
+
+// Given an array of tabs, iterates and calls dumpTab for each to place into a list item
 function dumpAllTabsNodes(tabs, query) {
   var list = $('<ul>');
   for (var i = 0; i < tabs.length; i++) {
@@ -85,7 +110,6 @@ function dumpTab(tabNode, query) {
         return $('<span></span>'); // if the query returns nothing (no children)
       }
     }
-
     //start creating a link
     var anchor = $('<a>');
     anchor.attr('href', tabNode.url);
@@ -97,18 +121,19 @@ function dumpTab(tabNode, query) {
       chrome.tabs.create({url: tabNode.url});
     });
 
-    // none of this span stuff is needed currently///
+     // none of this span stuff is needed currently -- RE ADD IF WANT TO ADD OPTIONS DURING HOVERING/ / /
     var span = $('<span>');
-    var options = tabNode.children ?
+    var options = '';
+    /*var options = tabNode.children ?
       $('<span></span>') : //if there are children, then no options
       $('<span>[<a id="editlink" href="#">Edit</a> <a id="deletelink" ' +
-        'href="#">Deleteeee</a>]</span>');
+        'href="#">Deleteeee</a>]</span>'); 
 
     var edit = tabNode.children ? 
       $('<table><tr><td>Name</td><td>' +  // if there are children - not relant for me?
       '<input id="title"></td></tr><tr><td>URL</td><td><input id="url">' +
       '</td></tr></table>') : $('<input>');
-    // Show add and edit links when hover over.
+    // Show add and edit links when hover over.*/
     
     span.hover(function () {
       span.append(options);
@@ -131,20 +156,36 @@ function saveChanges() {
     alert('Error: No value specified');
     return;
   }
- 
-  $('#save').val('saved!');
 
-  tabsValue = $('#tabs').html();
+  var tabsValue = $('#tabs').html();
   var myList = {};
   myList['firstItem'] = tabsValue;
-  var obj = {};
-  obj[workspaceName] = myList;
-  chrome.storage.sync.set(obj, function() {
-    console.log('added tabs ');
-    console.log(myList);
-    console.log(' to workspace: ' + workspaceName);
-    //alert('added workspace ' + theValue);
-  });
+
+  var d = new Date();
+  var creationDate = d.toString();
+  myList['createdDate'] = creationDate;
+  
+  chrome.storage.sync.get(workspaceName, function(data) { // didn't work to include the below here because it is a callback
+    if ((Object.keys(data)).length != 0) {
+      alert('Workspace already exists, overwriting currently is not supported. Existing Workspaces can be deleted via the Show All Tabs page');
+      return;
+    } else {   
+      //create object with key/value
+      var obj = {};
+      obj[workspaceName] = myList;
+
+      //store key/value obj
+      chrome.storage.sync.set(obj, function() {
+        console.log('added tabs ');
+        console.log(myList);
+        console.log(' to workspace: ' + workspaceName);
+        //alert('added workspace ' + theValue);
+      });
+      $('#save').val('Saved!');   // in future, need to remove functionality of button too
+
+
+    }
+  })   
 }
 
 document.addEventListener('DOMContentLoaded', function () {
