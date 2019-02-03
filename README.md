@@ -43,17 +43,18 @@ Done:
 * Updated CSS font-family to include more than Roboto. Includes: Oxygen, Ubuntu, Helvetica Neue, Arial, sans-serif
 * Add favicons
 
+* 0.77
+* show all workspaces in a starter tab
+
+
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
 To Do
 * change search to search extension lists?
-* show all workspaces in a starter tab
 * Easier way to overwrite an existing workspace
 * Create history of workspaces (for how long?)
 * Ability to share a workspace (how?)
-* add web page icon on show all tabs
 * add ability to select individual tab in show all tabs
-* update look/feel of show all tabs page - add logo
 
 
 
