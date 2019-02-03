@@ -1,13 +1,13 @@
-.top { font-family: "Roboto"; font-size: 14px; padding:5px; width:90%; background-color:#10052d; color:white; }
+.top { font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 14px; padding:5px; width:90%; background-color:white; color:darkorange; }
 
 /* unvisited link */
-a:link { color: orange; }
+a:link { color: purple; }
 
 /* visited link */
-a:visited {  color: darkorange;}
+a:visited {  color: darkblue;}
 
 /* mouse over link */
-a:hover {  color: ghostwhite;}
+a:hover {  color: darkgrey;}
 
 /* selected link */
 a:active {  color: blue;}
@@ -65,3 +65,22 @@ a:active {  color: blue;}
 	cursor: move;
 }
 
+.favIcon {
+  padding: 0px 5px 0px 0px;
+  margin: 4px 0px 0px 0px;
+  height:14;
+  width:14;
+  position: relative;
+  vertical-align: middle;
+}
+
+.urlLink {
+  padding: 0px 5px 0px 5px;
+  margin: 0px 5px 0px 0px;
+  position: relative;
+  vertical-align: middle;
+}
+
+ul {
+    list-style-type: none;
+}

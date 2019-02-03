@@ -59,8 +59,9 @@ function dumpWorkspace(workspace) {
 		div.append(span);
 		div.append(newData[workspace].firstItem);
     if (newData[workspace].createdDate != undefined ) {
-      div.append('Created: ' + newData[workspace].createdDate + '<br/><br/>');
+      div.append('Created: ' + newData[workspace].createdDate + '<br/>');
     }
+    div.append('<hr>')
 
 		$('#playground').append(div);
 	})

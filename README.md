@@ -30,7 +30,7 @@ Done:
 * updated Delete dialog box
 * new design/layout/color scheme
  
-* 7.5
+* 0.75
 * Removed ovewrwrite of workspace. Must go to Show all and delete first
 * Fixed issue of tabs list clearing after saving workspace
 * Search is no longer case-sensitive
@@ -38,7 +38,10 @@ Done:
 * Show created date in show all tabs, if available
 * Add instructions/docs on how to use functionality (specifically deleting Workspaces)
 
-
+* 0.76
+* Moved inline scripts to popup.js
+* Updated CSS font-family to include more than Roboto. Includes: Oxygen, Ubuntu, Helvetica Neue, Arial, sans-serif
+* Add favicons
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
@@ -48,6 +51,9 @@ To Do
 * Easier way to overwrite an existing workspace
 * Create history of workspaces (for how long?)
 * Ability to share a workspace (how?)
+* add web page icon on show all tabs
+* add ability to select individual tab in show all tabs
+* update look/feel of show all tabs page - add logo
 
 
 

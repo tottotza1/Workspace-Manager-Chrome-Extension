@@ -1,8 +1,21 @@
+window.dataLayer = window.dataLayer || [];
+
+function gtag(){dataLayer.push(arguments);}
+
+gtag('js', new Date());
+gtag('config', 'AW-796233903');
+
+
 window.addEventListener('click',function(e){
   if(e.target.href!==undefined){
     chrome.tabs.create({url:e.target.href})
   }
 })
+
+gtag('event', 'conversion', {
+    'send_to': 'AW-796233903/OiMQCPeg2o8BEK-h1vsC',
+    'transaction_id': ''
+});
 
 //this only is run once DOM is complete.
 $(function() {
@@ -110,9 +123,15 @@ function dumpTab(tabNode, query) {
         return $('<span></span>'); // if the query returns nothing (no children)
       }
     }
+
+    var favicon = tabNode.favIconUrl;
+    var favImg = $('<img>');
+    favImg.attr('src', tabNode.favIconUrl);
+    favImg.attr('class','favIcon');
     //start creating a link
     var anchor = $('<a>');
     anchor.attr('href', tabNode.url);
+    anchor.attr('class', 'urlLink')
     anchor.text(tabNode.title);
 
     //setting eventlistener
@@ -137,12 +156,12 @@ function dumpTab(tabNode, query) {
     
     span.hover(function () {
       span.append(options);
-      options.fadeIn();
+    //  options.fadeIn();
       },
       // unhover
       function() {
-       options.remove();
-      }).append(anchor);
+    //   options.remove();
+      }).append(favImg).append(anchor);
 
     var li = $(tabNode.title ? '<li>' : '<div>').append(span);
   }

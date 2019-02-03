@@ -1,5 +1,5 @@
 .top { 
-    font-family: "Roboto"; font-size: 13px; color:black; padding:3px; overflow:scroll;background-color:white 
+    font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 13px; color:black; padding:3px; overflow:scroll;background-color:white 
 }
 .table { 
     margin-left: 3px;
@@ -23,6 +23,8 @@
 .filler { 
     margin-left: 3px;
   	margin-right: 3px; border:0px; padding:3px; overflow:hidden;
+    background-color:#4c1862;
+    color:white;
 }
 
 .footer { 
@@ -101,4 +103,25 @@ a:active {  color: blue;}
   background-color: #ffffff;
   -ms-word-break: normal;
   word-break: normal;
+}
+
+.favIcon {
+  padding: 0px 0px 0px 0px;
+  margin: 4px 0px 0px 0px;
+  height:14;
+  width:14;
+  position: relative;
+  vertical-align: middle;
+}
+
+.urlLink {
+  padding: 0px 5px 0px 5px;
+  margin: 0px 5px 0px 0px;
+  position: relative;
+  vertical-align: middle;
+}
+
+ul {
+  padding-left: 10;
+  list-style-type: none;
 }
