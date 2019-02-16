@@ -4,7 +4,7 @@
   ],
 
   "name": "Workspace Manager",
-  "version": "0.77",
+  "version": "0.80",
   "manifest_version": 2,
   "short_name": "Workspace Tab Manager extension.",
   "description": "Tab Manager and Productivity Extension - save tabs as workspaces and revisit them in the future",
@@ -18,10 +18,6 @@
     "persistent": false
   },
   
-  "chrome_url_overrides" : {
-    "newtab": "files/allWorkspaces.html"
-  },
-
   "browser_action": {
     "default_icon": "icon.png",
     "default_popup": "popup.html",
@@ -33,8 +29,7 @@
   },
   "permissions": [
     "tabs",
-    "storage",
-    "bookmarks"
+    "storage"
   ],
   "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://www.googletagmanager.com; object-src 'self'"
 
