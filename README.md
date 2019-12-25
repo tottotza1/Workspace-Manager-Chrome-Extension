@@ -46,9 +46,12 @@ Done:
 * 0.77
 * show all workspaces in a starter tab
 
-* 0.8
+* 0.80
 * Removed 'bookmarks' permission
 * Rolled back show all workspace in starter tab
+
+* 0.81
+* Changed layout to move 'Show All' higher
 
 
 imagine a 'delicious' or 'instapaper' like site for your projects.

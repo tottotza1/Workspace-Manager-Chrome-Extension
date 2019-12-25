@@ -12,32 +12,31 @@
   <body style="width: 400px;overflow:scroll" class="top">    
     <div class="farright"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div><br/>
     <div class="table">
-      List of Workspaces:<br/>
+      <input class="widebutton" type="submit" value="Show All Workspaces" id="all"> Can be used to delete
+    </div>
+    <div class="table">
+      List of Saved Workspaces:<br/>
       <div class="selectdiv">
       <div class="farleft" id='workspaceList'></div></div>
       <div class="farright"><input class="button" type="submit" value="Open" id="open"></div>
+    </div>
+
+    <div class="table">
+      Search all Saved Workspaces: <br/>
+      <div class="selectdiv">
+      <div class="farleft"><input class="inputdiv" id="search"></div></div>
+      <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
+    </div>
+
+    <div class="filler">Name the open tabs as a Workspace: <br/>
+      <div class="farleft"><input class="inputdiv" id="workspace"></div>
+      <div class="farright"><input class="button" type="submit" value="Save" id="save"></div>
     </div>
 
     <div class="listingtitle" id="listingtitle"></div>
     <div class="middle" id="tabs"></div>
     <div id="editdialog"></div>
     <div id="deletedialog"></div>
-    
-    <div class="filler">Name the current Workspace: <br/>
-      <div class="farleft"><input class="inputdiv" id="workspace"></div>
-      <div class="farright"><input class="button" type="submit" value="Save" id="save"></div>
-    </div>
-    
-    <div class="table">
-      Search all saved Workspaces: <br/>
-      <div class="selectdiv">
-      <div class="farleft"><input class="inputdiv" id="search"></div></div>
-      <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
-    </div>
-    
-    <div class="table">
-      <input class="button" type="submit" value="Show All" id="all"> Use to delete workspaces
-    </div>
 
     <div class="footer">
       <div class="farleft">Are you a fan? 

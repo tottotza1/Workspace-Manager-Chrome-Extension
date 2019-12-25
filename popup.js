@@ -77,7 +77,7 @@ function createWorkspaceList() {
 function dumpAllTabs(query) {
   if (!query) {  // by default show the open tabs
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b>OPEN TABS:<b></br>')
+   $('#listingtitle').append('<b>TABS OPEN IN CURRENT WINDOW:<b></br>')
     var tabNames = chrome.tabs.getAllInWindow(
         null, function(tabs) {
         $('#tabs').append(dumpAllTabsNodes(tabs, query))

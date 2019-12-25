@@ -9,7 +9,7 @@
 .left { float:left; width:45%; }
 .right { float:right; width:45%;  }
 .farright { float:right; position:absolute; right:25px; }
-.farleft{ float:left; width:55%;}
+.farleft{ float:left; width:60%;}
 .ratings { 
     margin-left: 3px;
 		margin-right: 3px; border:0px; padding:3px; width:90%; overflow:hidden;
@@ -57,6 +57,17 @@
     color:white; 
     border:none; 
     width:100px;
+}
+
+.widebutton {
+    margin-top: 5px;
+    height: 20px; 
+    background-color:#ff930f; 
+    border-radius: 6px;   
+    text-align: center; 
+    color:white; 
+    border:none; 
+    width:60%;
 }
 
 /* unvisited link */
