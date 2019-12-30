@@ -6,29 +6,37 @@
     <link rel="stylesheet" href="./popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="popup.js"></script>
+    <title>Workspace Manager</title>
   </head>
   
 
   <body style="width: 400px;overflow:scroll" class="top">    
     <div class="farright"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div><br/>
-    <div class="table">
-      <input class="widebutton" type="submit" value="Show All Workspaces" id="all"> Can be used to delete
-    </div>
-    <div class="table">
-      List of Saved Workspaces:<br/>
-      <div class="selectdiv">
-      <div class="farleft" id='workspaceList'></div></div>
-      <div class="farright"><input class="button" type="submit" value="Open" id="open"></div>
+    <div class='section_one'>
+      <div class="table">
+          <div class="subtitle2">View and Delete Workspaces</div>
+          <input class="widebutton" type="submit" value="Show All" id="all">
+      </div>
+
+      <div class="table">
+        <div class="subtitle">List of Saved Workspaces<br/></div>
+        <div class="selectdiv">
+          <div class="farleft" id='workspaceList'></div>
+        </div>
+        <div class="farright"><input class="button" type="submit" value="Open" id="open"></div>
+      </div>
+
+      <div class="table">
+        <div class="subtitle">Search all Saved Workspaces <br/></div>
+        <div class="selectdiv">
+          <div class="farleft"><input class="inputdiv" id="search"></div>
+        </div>
+        <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
+      </div>
     </div>
 
-    <div class="table">
-      Search all Saved Workspaces: <br/>
-      <div class="selectdiv">
-      <div class="farleft"><input class="inputdiv" id="search"></div></div>
-      <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
-    </div>
-
-    <div class="filler">Name the open tabs as a Workspace: <br/>
+    <div class="filler">
+      <div class="subtitle">Name the open tabs as a Workspace: <br/></div>
       <div class="farleft"><input class="inputdiv" id="workspace"></div>
       <div class="farright"><input class="button" type="submit" value="Save" id="save"></div>
     </div>

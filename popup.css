@@ -1,19 +1,44 @@
 .top { 
-    font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 13px; color:black; padding:3px; overflow:scroll;background-color:white 
-}
-.table { 
-    margin-left: 3px;
-		margin-right: 3px;border:1px solid black; color:white;padding:3px; overflow:hidden;background-color:#4c1862 
+    font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; 
+    font-size: 13px; color:black; padding:3px; overflow:scroll;background-color:white 
+
 }
 
-.left { float:left; width:45%; }
+.section_one {
+  border:1px solid #C5ACCF;
+}
+.table { 
+    margin-left: 5px;
+    margin-top:3px;
+
+		margin-right: 3px;border:0px solid black; color:#4c1862;padding:3px; 
+    overflow:hidden;background-color:white 
+}
+
+.left { float:left; width:45%; margin-left: 5px; }
 .right { float:right; width:45%;  }
-.farright { float:right; position:absolute; right:25px; }
-.farleft{ float:left; width:60%;}
+.farright { right:25px; }
+.farleft{ float:left; width:70%; margin-left: 5px; padding-right:5px;}
 .ratings { 
     margin-left: 3px;
 		margin-right: 3px; border:0px; padding:3px; width:90%; overflow:hidden;
 }
+
+.subtitle {
+  margin-left: 5px;
+}
+
+.subtitle2 {
+    margin-top: 5px;
+    margin-left: 5px;
+    height: 20px; 
+    border-radius: 6px;   
+    border:none; 
+    float:left; right:25px;
+    width:70%;
+    padding-right:5px;
+}
+
 
 .NoLink {}
 .YesLink {
@@ -21,30 +46,32 @@
 }
 
 .filler { 
-    margin-left: 3px;
-  	margin-right: 3px; border:0px; padding:3px; overflow:hidden;
+    margin-left: 5px;
+  	margin-right: 3px; 
+    border:0px; padding:3px; overflow:hidden;
+    margin-top:10px;
     background-color:#4c1862;
     color:white;
 }
 
 .footer { 
-    margin-left: 3px;
+    margin-left: 5px;
     margin-right: 3px; border:0px; padding:3px; overflow:hidden;
-    margin-bottom: 50px;
+    margin-bottom: 5px;
 }
 
-
-
 .middle { 
-    margin-left: 3px;
+    margin-left: 5px;
   	margin-right: 3px;
-  	border:1px solid black; color:black; padding:3px;  overflow:hidden;background-color:white 
+    margin-top: 1px;
+    padding-top: 1px;
+  	border:0px solid black; color:black; padding:1px;  overflow:hidden;background-color:white 
 }
 
 .listingtitle { 
-    margin-left: 3px;
+    margin-left: 5px;
     margin-right: 3px;
-    margin-top:1px;
+    margin-top:5px;
     border:none; color:black; padding:3px; width:90%; overflow:hidden;background-color:white 
 }
 
@@ -67,7 +94,8 @@
     text-align: center; 
     color:white; 
     border:none; 
-    width:60%;
+    width:100px;
+    right:25px;
 }
 
 /* unvisited link */
@@ -133,6 +161,8 @@ a:active {  color: blue;}
 }
 
 ul {
-  padding-left: 10;
+  padding-left: 5px;
+  padding-top: 1px;
+  margin-top: 1px;
   list-style-type: none;
 }

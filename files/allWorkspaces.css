@@ -1,4 +1,4 @@
-.top { font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 14px; padding:5px; width:90%; background-color:white; color:darkorange; }
+.top { font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 14px; padding:px; width:90%; background-color:white; color:darkorange; }
 
 /* unvisited link */
 a:link { color: purple; }
@@ -83,4 +83,6 @@ a:active {  color: blue;}
 
 ul {
     list-style-type: none;
+    padding-inline-start: 15px;
+
 }

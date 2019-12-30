@@ -77,7 +77,7 @@ function createWorkspaceList() {
 function dumpAllTabs(query) {
   if (!query) {  // by default show the open tabs
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b>TABS OPEN IN CURRENT WINDOW:<b></br>')
+   $('#listingtitle').append('<b>TABS OPEN IN CURRENT WINDOW:</b>')
     var tabNames = chrome.tabs.getAllInWindow(
         null, function(tabs) {
         $('#tabs').append(dumpAllTabsNodes(tabs, query))
@@ -85,7 +85,7 @@ function dumpAllTabs(query) {
    return;
   } else { //if a search 
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b>SEARCH RESULTS:<b></br>')
+   $('#listingtitle').append('<b>SEARCH RESULTS:</b>')
    var allWorkspaces = chrome.storage.sync.get(
         null, function(data) {
           var keys = Object.keys(data);

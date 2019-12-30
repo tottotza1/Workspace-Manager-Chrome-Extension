@@ -4,7 +4,7 @@
   ],
 
   "name": "Workspace Manager",
-  "version": "0.81",
+  "version": "0.82",
   "manifest_version": 2,
   "short_name": "Workspace Tab Manager extension.",
   "description": "Tab Manager and Productivity Extension - save tabs as workspaces and revisit them in the future",
