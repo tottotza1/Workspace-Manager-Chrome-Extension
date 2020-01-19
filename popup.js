@@ -52,9 +52,9 @@ $(function() {
 function openTabs(firstItem) {
   chrome.windows.create(null, function (w) {
     var doc = $(firstItem);
-    var links = $('a', doc);
+    var links = $('a', doc); 
     for(var i=0;i<links.length;i++){
-      chrome.tabs.create({windowId: w.id,
+      chrome.tabs.create({windowId: w.id, //index: i, //this is where you could change to not have an empty tab
                           url: links[i].href});
     }
   });

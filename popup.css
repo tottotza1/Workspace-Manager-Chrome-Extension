@@ -5,13 +5,24 @@
 }
 
 .section_one {
-  border:1px solid #C5ACCF;
+  border:1px solid #C5ACCF; background-color:#4c1862;
 }
 .table { 
-    margin-left: 5px;
-    margin-top:3px;
+    margin-left: 1px;
+    margin-top:1px;
+    margin-bottom:0px;
+		margin-right: 1px;
+    border:0px solid black; color:#4c1862;padding:1px; 
+    overflow:hidden;background-color:white 
+}
 
-		margin-right: 3px;border:0px solid black; color:#4c1862;padding:3px; 
+.table_notopmargin { 
+    margin-left: 1px;
+    margin-bottom:1px;
+    margin-right: 1px;
+    border:0px solid black; color:#4c1862;padding:1px; 
+    padding-bottom: 10px;
+    padding-top: 0px;
     overflow:hidden;background-color:white 
 }
 
@@ -21,14 +32,18 @@
 .farleft{ float:left; width:70%; margin-left: 5px; padding-right:5px;}
 .ratings { 
     margin-left: 3px;
-		margin-right: 3px; border:0px; padding:3px; width:90%; overflow:hidden;
+		margin-right: 3px; border:0px; padding:3px; overflow:hidden;
 }
+
+.footerleft{ float:left; margin-left: 3px; padding-right:3px; }
+.footerright { margin-left: 3px; }
 
 .subtitle {
   margin-left: 5px;
+  margin-top: 3px;
 }
 
-.subtitle2 {
+.subtitle_inline {
     margin-top: 5px;
     margin-left: 5px;
     height: 20px; 
@@ -42,37 +57,37 @@
 
 .NoLink {}
 .YesLink {
-    float:left; width:45%; 
+    width:45%; 
 }
 
 .filler { 
-    margin-left: 5px;
-  	margin-right: 3px; 
-    border:0px; padding:3px; overflow:hidden;
-    margin-top:10px;
+    margin-left: 1px;
+  	margin-right: 1px; 
+    border:0px; padding:1px; overflow:hidden;
+    margin-top:2px;
     background-color:#4c1862;
     color:white;
 }
 
 .footer { 
-    margin-left: 5px;
-    margin-right: 3px; border:0px; padding:3px; overflow:hidden;
+    border:0px; padding:3px; overflow:hidden;
     margin-bottom: 5px;
 }
 
 .middle { 
-    margin-left: 5px;
-  	margin-right: 3px;
-    margin-top: 1px;
+    margin-left: 1px;
+  	margin-right: 1px;
+    margin-bottom: 1px;
     padding-top: 1px;
   	border:0px solid black; color:black; padding:1px;  overflow:hidden;background-color:white 
 }
 
 .listingtitle { 
-    margin-left: 5px;
-    margin-right: 3px;
+    margin-left: 1px;
+    margin-right: 1px;
     margin-top:5px;
-    border:none; color:black; padding:3px; width:90%; overflow:hidden;background-color:white 
+    border:none; color:black; padding:3px; overflow:hidden;background-color:white ;
+    padding-left: 5px;
 }
 
 .button {

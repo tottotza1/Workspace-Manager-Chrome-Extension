@@ -53,6 +53,9 @@ Done:
 * 0.81
 * Changed layout to move 'Show All' higher
 
+* 0.83
+* Improved Delete Dialog UI
+
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 

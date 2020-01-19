@@ -1,4 +1,10 @@
-.top { font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; font-size: 14px; padding:px; width:90%; background-color:white; color:darkorange; }
+.top { 
+	font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; 
+	font-size: 14px; 
+	padding:1px; 
+	width:90%; 
+	background-color:white; 
+	color:darkorange; }
 
 /* unvisited link */
 a:link { color: purple; }
@@ -7,30 +13,36 @@ a:link { color: purple; }
 a:visited {  color: darkblue;}
 
 /* mouse over link */
-a:hover {  color: darkgrey;}
+a:hover {  color: orange;}
 
 /* selected link */
 a:active {  color: blue;}
 
+.ui-widget {
+	background-color: white;
+	opacity: 1.0px;
+}
 .dialog {
     display:none;
-    background-color: ghostwhite;
-    color:black;
+    background-color: white;
+    opacity: 1.0;
+    color:#4c1862;
     width: 50px;
     height: 20px;
-    border: 1px solid black;
+    border: 0px solid black;
     padding-left: 5px;
 }
 
 .ui-dialog {
-	position: absolute;
-	top: 0;
+    position:absolute;
+    top:20px;
 	left: 0;
 	padding: .2em;
+	border: 1px solid black;
 	outline: 0;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: .4em 1em;
+	padding: 0em 0.2em;
 	position: relative;
 	background-color: #4c1862;
 	color: white;
@@ -39,10 +51,10 @@ a:active {  color: blue;}
 	position: absolute;
 	right: .3em;
 	top: 50%;
-	width: 20px;
-	margin: -10px 0 0 0;
-	padding: 1px;
-	height: 20px;
+	width: 15px;
+	margin: -12px 0 10px 0;
+	padding: 0px 0 10 0;
+	height: 15px;
 }
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;
@@ -62,7 +74,7 @@ a:active {  color: blue;}
 
 }
 .ui-draggable .ui-dialog-titlebar {
-	cursor: move;
+	cursor: disabled;
 }
 
 .favIcon {

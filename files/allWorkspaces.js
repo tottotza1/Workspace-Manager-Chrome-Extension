@@ -1,72 +1,61 @@
 
 
-function dumpAllWorkspaces() {
+function displaySavedWorkspaces() { //get all workspaces that have been saved previously
 	var allWorkspaces = chrome.storage.sync.get(null, function(data){
 		var keys = Object.keys(data);
 		for (var i = 0; i<keys.length;i++){
-			dumpWorkspace(keys[i]);
+			displayWorkspace(keys[i]);
 		}
 	})
 }
 
-
-function dumpWorkspace(workspace) {
+function displayWorkspace(workspace) { //for a single workspace (with multiple tabs)
 	console.log(workspace);
-	chrome.storage.sync.get(workspace, function(newData) {
-		var options = $('<span>[<a id="deletelink" ' + 'href="#">Delete Workspace</a>]</span>');
-        var span = $('<span id=\'' + workspace + '\'>');
-        span.hover(function () {
-        	span.append(options);
-        	$('#deletelink').click(function() {
-              $('#deletedialog').dialog({
-                 show: {
-                    effect: "blind",
-                    duration: 500
-                 },
-                 hide: {
-                    effect: "explode",
-                    duration: 500
-                 },
-                 autoOpen: false,
-                 resizable: false,
-                 modal: true,
-                                  overlay: {
-                   backgroundColor: '#FFF',
-                   //opacity: 0.5
-                 },
-                 closeText: 'X',
-                 buttons: {
-                   'Yes, Delete It!': function() {
-                      chrome.storage.sync.remove(workspace, function() {
-                      span.parent().remove();              	
-                      });
-                      $(this).dialog('destroy'); 
-                    },
-                    Cancel: function() {
-                      $(this).dialog('destroy');
-                    }
-                 }
-               }).dialog('open');
-         	});
-      		options.fadeIn();
-      		},
-      		// unhover
-      		function() {
-       			options.remove();
-      		}).append('<b>' + workspace + '</b></br>');// + newData[workspace].firstItem);
-		//create Link
-		var div = $('<div>'); //doing this so that 'delete' shows up under title, but then removes bullets as well.
-		div.append(span);
-		div.append(newData[workspace].firstItem);
-    if (newData[workspace].createdDate != undefined ) {
-      div.append('Created: ' + newData[workspace].createdDate + '<br/>');
+	chrome.storage.sync.get(workspace, function(newData) { //get the tabs for the workspace name
+		var topDiv = $('<div>'); //doing this so that 'delete' shows up under title, but then removes bullets as well.
+    var deleteLinkSpan = $('<span>[<a id="deletelink" ' + 'href="#">Delete Workspace</a>]</span>');
+    //options.show();
+   
+    deleteLinkSpan.click( function() { //this is called when link is clicked
+      $('#deletedialog').dialog( { // this is the overlay dialog box
+        autoOpen: false,
+        resizable: false,
+        draggable: false,
+        position: { my: "center top", at: "center top+50", of: window },
+        modal: true,
+        overlay: {
+          backgroundColor: 'white',
+          opacity: 1.0
+        },
+        closeText: 'x',
+        buttons: {
+          'Yes, Delete!': function() {
+            chrome.storage.sync.remove(workspace, function() {
+            span.parent().remove();              	
+          });
+          $(this).dialog('destroy');
+        },
+        'Cancel': function() {
+          $(this).dialog('destroy');
+          }  //need to set focus
+        }
+      }).dialog('open');
+    });
+    //deleteLinkSpan.show();
+    var span = $('<span id=\'' + workspace + '\'>');
+    span.append('<b>' + workspace + '</b></br></span>'); //display the Workspace name + newData[workspace].firstItem);
+      //create Link
+    topDiv.append(span);
+    topDiv.append(deleteLinkSpan);
+  	topDiv.append(newData[workspace].firstItem); //display the tabs
+    if (newData[workspace].createdDate != undefined ) { //this is to accommodate users from before feature was implemented
+      topDiv.append('Created: ' + newData[workspace].createdDate + '<br/>');
     }
-    div.append('<hr>')
-
-		$('#playground').append(div);
-	})
+    topDiv.append('</div>');
+    topDiv.append('<hr>')
+  	$('#playground').append(topDiv);
+  })
 }
-
 
 //called when popup opens to create workspace dropdown
 function createWorkspaceList() {
@@ -81,16 +70,16 @@ function createWorkspaceList() {
   $('#workspaceList').append('<select id=\'myId\'>' + dropdown);
 }
 
-// retrieves all tabs and then dumps them all into the popup
-function dumpAllTabs(query) {
+// retrieves all currently pen tabs and then lists them in the page under the 'tabs'
+function displayAllOpenTabs(query) {
   var tabNames = chrome.tabs.getAllInWindow(
       null, function(tabs) {
-      $('#tabs').append(dumpAllTabsNodes(tabs, query))
+      $('#tabs').append(createListOfTabs(tabs, query))
   });
 }
 
 // iterates through each tab and calls dumpTab for each
-function dumpAllTabsNodes(tabs, query) {
+function createListOfTabs(tabs, query) {
   var list = $('<ul>');
   for (var i = 0; i < tabs.length; i++) {
     list.append(dumpTab(tabs[i],query) );  
@@ -107,9 +96,14 @@ function dumpTab(tabNode, query) {
       }
     }
 
+    var favicon = tabNode.favIconUrl;
+    var favImg = $('<img>');
+    favImg.attr('src', tabNode.favIconUrl);
+    favImg.attr('class','favIcon');
     //start creating a link
     var anchor = $('<a>');
     anchor.attr('href', tabNode.url);
+    anchor.attr('class', 'urlLink')
     anchor.text(tabNode.title);
 
     //setting eventlistener
@@ -134,12 +128,12 @@ function dumpTab(tabNode, query) {
     
     span.hover(function () {
       span.append(options);
-      options.fadeIn();
+      //options.fadeIn();
       },
       // unhover
       function() {
-       options.remove();
-      }).append(anchor);
+    //   options.remove();
+      }).append(favImg).append(anchor);
 
     var li = $(tabNode.title ? '<li>' : '<div>').append(span);
   }
@@ -147,6 +141,6 @@ function dumpTab(tabNode, query) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  dumpAllTabs();
-  dumpAllWorkspaces();
+  displayAllOpenTabs();
+  displaySavedWorkspaces();
 });
