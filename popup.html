@@ -3,54 +3,135 @@
     <!-- Global site tag (gtag.js) - Google Ads: 796233903 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=AW-796233903"></script>
   
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="files/allWorkspaces.css">
     <link rel="stylesheet" href="./popup.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
     <script src="popup.js"></script>
     <title>Workspace Manager</title>
+   
+    <style>
+	
+	  html {
+	   margin:0;
+	   padding:0;
+	  }
+	   body {
+	     padding:0px !important;
+		 margin:0;	
+		 position:relative;
+		 width:450px;
+		 
+	   }
+	
+	 .btn-sm {
+	  padding:5px 20px;
+	  margin-top:4px;
+	  float:right;
+	  margin-right:5px;
+	  width:90px;
+	  max-width:150px;
+	  border-radius:5px;
+	  font-size:12px;
+	  box-sizing:border-box;
+	  
+	 }
+	
+	.hidden {
+	 display:none;
+	}
+	
+	.subtitle {
+	  font-size:14px;
+	  color:#444;
+	}
+	
+	.card {
+      padding:5px;
+	  box-shadow:0px 1px 1px 0px rgba(0,0,0,.1);
+	   border:1px solid rgba(0,0,0,.2);
+	 }
+	 
+	 .form-control {
+	   font-size:14px;
+	   padding:5px 5px;
+	   height:30px;
+	   color:#666;
+	 }
+	 
+	 ul li {
+	 text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
+   font-size:12px;
+   margin:3px 0px;
+	 }
+	 
+	 li img {
+	  position:relative;
+       top:-3px;
+	 }
+	 
+	</style>
+  
+  
   </head>
   
+ 
 
-  <body style="width: 400px;overflow:scroll" class="top">    
-    <div class="farright"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div>
-    <div class='section_one'>
+  <body  class="top">
+  
+     <div class="alert bg-primary" style="text-align:center; font-weight:bold; box-shadow:0px 1px 2px 0px rgba(0,0,0,.2); padding:7px 0px; margin:0"> <a href="popup.html" target="_self" style="font-weight:bold;text-decoration:none; color:white"> Workspace Manager </a> </div>
+
+    <div>
+	  <a href="./files/allWorkspaces.html"> <button class="btn btn-secondary btn-sm" id="showall" value="Show All" style="margin-right:25px; width:auto; float:lef;">Show All</button> </a>
+	</div>
+	  <div style="padding:0px 15px;">
+  <div><img src="../images/WorkSpace_Icon.png" style='width:57px;'></div>
+  
+    <div style="padding:0px;">
+    <div class='section_one card'>
       <div class="table">
-        <div class="subtitle">Saved Workspaces<br/></div>
+        <div class="subtitle"> Saved Workspaces <br/></div>
         <div class="selectdiv">
           <div class="farleft" id='workspaceList'></div>
         </div>
-        <div class="farright"><input class="button" type="submit" value="Open" id="open"></div>
+        <div class="farright">
+		<input class="btn btn-outline-warning btn-sm" type="submit" value="Open" id="open"></div>
       </div>
 
       <div class="table">
         <div class="subtitle">Search all Saved Workspaces <br/></div>
         <div class="selectdiv">
-          <div class="farleft"><input class="inputdiv" id="search"></div>
+          <div class="farleft"><input class="inputdiv form-control"  id="search"></div>
         </div>
-        <div class="farright"><input class="button" type="submit" value="Search" id="searched"></div>
+        <div class="farright"><input class="btn btn-outline-warning btn-sm" type="submit" value="Search" id="searched"></div>
       </div>
            
-      <div class="table_notopmargin">
-          <div class="subtitle_inline">View and Delete Workspaces</div>
-          <input class="widebutton" type="submit" value="Show All" id="all">
-      </div>
     </div>
 
     <div class="section_one">
-      <div class="filler">
-          <div class="subtitle">Name the open tabs as a Workspace: <br/></div>
-          <div class="farleft"><input class="inputdiv" id="workspace"></div>
-          <div class="farright"><input class="button" type="submit" value="Save" id="save"></div>
+      <div class="filler" style="margin:5px 0px; padding:8px 5px; border-radius:5px;"  >
+          <div class="subtitle" style="color:white; margin-bottom:3px; margin-top:0px;">Name the open tabs as a Workspace: <br/></div>
+          <div class="farleft"><input class="form-control" id="workspace"></div>
+          <div class="farright"><input class="btn btn-warning btn-sm" style="margin-top:-1px;" type="submit" value="Save" id="save" /> </div>
       </div>
-
-      <div class="listingtitle" id="listingtitle"></div>
+    
+	<div class="card" style="padding:0px; color:#444;">
+      <div class="listingtitle"  id="listingtitle"></div>
       <div class="middle" id="tabs"></div>
       <div id="editdialog"></div>
       <div id="deletedialog"></div>
     </div>
+    </div>
 
-    <div class="footer">
-      <div class="footerleft"><img src="images/WorkSpace_Icon.png"></div>
-      <div class="footerright">Are you a fan? 
+
+    </div>
+	
+	    <div class="footer" style="background-color:white; position:relative; margin-bottom:0px; padding:5px 10px;">
+      <div class="footerleft"><img src="images/WorkSpace_Icon.png" width="63px"></div>
+      <div class="footerright" style="position:relative; left:10px;">Are you a fan? 
         <div class="ratings">
           <div class="YesLink">
             <a href="https://chrome.google.com/webstore/detail/workspace-manager/cpfchfkodgnkhfmndmmkecbihmdahpia/reviews">Yes!</a>
@@ -59,7 +140,10 @@
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">No</a>
           </div>
         </div>
+		
       </div>
+		 <div class="farright" style="position:absolute; right:10px; top:17px;"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div>
+   
     </div>
   </body>
 </html>

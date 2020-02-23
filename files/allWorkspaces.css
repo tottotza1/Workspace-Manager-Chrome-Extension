@@ -1,8 +1,7 @@
 .top { 
 	font-family: "Roboto", "Oxygen", "Ubuntu", "Helvetica Neue", Arial, sans-serif; 
 	font-size: 14px; 
-	padding:1px; 
-	width:90%; 
+
 	background-color:white; 
 	color:darkorange; }
 
@@ -37,24 +36,25 @@ a:active {  color: blue;}
     position:absolute;
     top:20px;
 	left: 0;
-	padding: .2em;
-	border: 1px solid black;
+	border: 1px solid rgba(0,0,0,.3);
+	box-shadow:0px 2px 4px 0px rgba(0,0,0,.1);
 	outline: 0;
 }
 .ui-dialog .ui-dialog-titlebar {
-	padding: 0em 0.2em;
+	padding: 4px 10px;
+	margin:0px;
 	position: relative;
 	background-color: #4c1862;
 	color: white;
 }
 .ui-dialog .ui-dialog-titlebar-close {
 	position: absolute;
-	right: .3em;
-	top: 50%;
-	width: 15px;
-	margin: -12px 0 10px 0;
-	padding: 0px 0 10 0;
-	height: 15px;
+   background-color:unset;
+    color:white; 
+	font-size:20px;
+	right:5px;
+	top:-2px;
+	border:none;
 }
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;
@@ -67,10 +67,14 @@ a:active {  color: blue;}
 	float: right;
 }
 .ui-dialog .ui-dialog-buttonpane button {
-	margin: .5em .4em .5em 0;
+	margin-right:5px;
+	margin-bottom:5px;
 	cursor: pointer;
 	background-color: #4c1862;
 	color: white;
+	border:1px solid;
+	border-radius:5px;
+	background-color:#4c1862;
 
 }
 .ui-draggable .ui-dialog-titlebar {
@@ -81,7 +85,7 @@ a:active {  color: blue;}
   padding: 0px 5px 0px 0px;
   margin: 4px 0px 0px 0px;
   height:14;
-  width:14;
+  width:20;
   position: relative;
   vertical-align: middle;
 }

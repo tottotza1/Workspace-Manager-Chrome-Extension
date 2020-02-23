@@ -7,7 +7,7 @@ gtag('config', 'AW-796233903');
 
 
 window.addEventListener('click',function(e){
-  if(e.target.href!==undefined){
+  if(e.target.href!==undefined && e.target.getAttribute("target")!="_self"){
     chrome.tabs.create({url:e.target.href})
   }
 })
@@ -21,7 +21,8 @@ gtag('event', 'conversion', {
 $(function() {
   $('#all').click(function() {
     console.log('here');
-    chrome.tabs.create({url: './files/allWorkspaces.html'})
+    //chrome.tabs.create({url: './files/allWorkspaces.html'})
+	window.location.href = "./files/allWorkspaces.html";
   });
   $('#search').change(function() {
     $('#tabs').empty();
@@ -33,6 +34,21 @@ $(function() {
   });
   $('#open').click(function() { // listener for when 'get' is clicked
     workspaceDropDown = $('#workspaceSelection').val();
+    console.log(workspaceDropDown);
+    chrome.storage.sync.get(workspaceDropDown, function(newData) {
+      //console.log(newData);
+      //var allKeys = Object.keys(newData);
+      //console.log('allKeys ');
+      //console.log(allKeys);
+      //console.log(newData[workspaceDropDown]);
+      //alert('The value is: ' + newData[getValue].firstItem); 
+      //$('#tabs').empty();
+      //$('#tabs').append(newData[workspaceDropDown].firstItem);
+      openTabs(newData[workspaceDropDown].firstItem);
+    });
+  });
+  $('#search_open').click(function() { // listener for when 'get' is clicked
+    workspaceDropDown = 'AdWordsExtensions';//$('#workspaceSelection').val();
     console.log(workspaceDropDown);
     chrome.storage.sync.get(workspaceDropDown, function(newData) {
       //console.log(newData);
@@ -70,14 +86,21 @@ function createWorkspaceList() {
     }
     return options;
   })
-  $('#workspaceList').append('<select id=\'workspaceSelection\'>' + dropdown);
-}
+  $('#workspaceList').append('<select class="form-control" style="text-align-last:center" id=\'workspaceSelection\'>' + dropdown);
+  
+   setTimeout(function(){
+    if(!$("#workspaceSelection option").length){
+		$("#workspaceSelection").append("<option> Nothing found.</option>");
+		}
+   },100);
+	}
+
 
 // retrieves all tabs and then dumps them all into the popup
 function dumpAllTabs(query) {
   if (!query) {  // by default show the open tabs
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b>TABS OPEN IN CURRENT WINDOW:</b>')
+   $('#listingtitle').append('<b style="font-size:12px; ">TABS OPEN IN CURRENT WINDOW:</b>')
     var tabNames = chrome.tabs.getAllInWindow(
         null, function(tabs) {
         $('#tabs').append(dumpAllTabsNodes(tabs, query))
@@ -99,11 +122,21 @@ function dumpAllTabs(query) {
 //show search results for a specified key
 function dumpSearch (currentkey, query) {
    chrome.storage.sync.get(currentkey, function(newData) {
-    if (newData[currentkey].firstItem.toLowerCase().indexOf(query.toLowerCase()) != -1) {  
-      $('#tabs').append('<b>' + currentkey + '<b>')
+    if (newData[currentkey].firstItem.toLowerCase().indexOf(query.toLowerCase()) != -1) { 
+      inputButton = $('<input class="btn btn-outline-warning btn-sm" type="submit" value="Open" id="search_open"><br>')
+      inputButton.on('click',function () { searchOpener(newData[currentkey].firstItem)} )
+      $('#tabs').append(inputButton)
+      $('#tabs').append('<b style="margin-left:5px;">' + currentkey + '<b>') //this is the workspace name
       $('#tabs').append(newData[currentkey].firstItem)
+
     }
    });
+}
+
+function searchOpener(tabsToOpen) {
+  console.log(tabsToOpen)
+  openTabs(tabsToOpen);
+
 }
 
 // Given an array of tabs, iterates and calls dumpTab for each to place into a list item
@@ -137,7 +170,7 @@ function dumpTab(tabNode, query) {
     //setting eventlistener
     //Clicking on a tab in the extension, fires with a new tab with the url
     anchor.click(function() {
-      chrome.tabs.create({url: tabNode.url});
+      //chrome.tabs.create({url: tabNode.url});
     });
 
      // none of this span stuff is needed currently -- RE ADD IF WANT TO ADD OPTIONS DURING HOVERING/ / /
@@ -171,10 +204,11 @@ function dumpTab(tabNode, query) {
 // function called to save a workspace
 function saveChanges() {
   var workspaceName = $('#workspace').val();
-  if (!workspaceName) {  // Check that there's some text there. should never get here
-    alert('Error: No value specified');
+  if (!workspaceName) {  // Check that there's some text there. 
+    customAlert('Error: No value specified');
     return;
   }
+
 
   var tabsValue = $('#tabs').html();
   var myList = {};
@@ -186,7 +220,7 @@ function saveChanges() {
   
   chrome.storage.sync.get(workspaceName, function(data) { // didn't work to include the below here because it is a callback
     if ((Object.keys(data)).length != 0) {
-      alert('Workspace already exists, overwriting currently is not supported. Existing Workspaces can be deleted via the Show All Tabs page');
+      customAlert('Workspace already exists, overwriting currently is not supported. Existing Workspaces can be deleted via the Show All Tabs page');
       return;
     } else {   
       //create object with key/value
@@ -201,7 +235,8 @@ function saveChanges() {
         //alert('added workspace ' + theValue);
       });
       $('#save').val('Saved!');   // in future, need to remove functionality of button too
-
+     
+	   window.location.reload();
 
     }
   })   
@@ -211,3 +246,28 @@ document.addEventListener('DOMContentLoaded', function () {
   dumpAllTabs();
   createWorkspaceList();
 });
+
+
+
+ function customAlert(text){
+	 
+	  $('<div style="padding:10px;" title="Error" />').html(text).dialog( { // this is the overlay dialog box
+        autoOpen: false,
+        resizable: false,
+        draggable: false,
+        position: { my: "center top", at: "center top+50", of: window },
+        modal: true,
+        overlay: {
+          backgroundColor: 'white',
+          opacity: 1.0
+        },
+        closeText: '&times;',
+        buttons: {
+         'OK': function() {
+          $(this).dialog('destroy');
+          }  //need to set focus
+        }
+      }).dialog('open');
+	  
+
+ }

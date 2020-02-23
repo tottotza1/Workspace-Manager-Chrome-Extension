@@ -56,6 +56,14 @@ Done:
 * 0.83
 * Improved Delete Dialog UI
 
+* 0.831
+* Fixed UI alignment issues
+
+* 0.9
+* Updated UI to use bootstrap
+* Changed show all to be within popup rather than a new tab
+* Fixed Dialog boxes
+* Refeshed look/feel throughout
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
