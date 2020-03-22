@@ -64,6 +64,10 @@ Done:
 * Changed show all to be within popup rather than a new tab
 * Fixed Dialog boxes
 * Refeshed look/feel throughout
+* Show all allow for opening workspaces or individual tabs
+
+* 0.903
+* Added memory of workspace names
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 

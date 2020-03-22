@@ -44,13 +44,13 @@ $(function() {
       //alert('The value is: ' + newData[getValue].firstItem); 
       //$('#tabs').empty();
       //$('#tabs').append(newData[workspaceDropDown].firstItem);
-      openTabs(newData[workspaceDropDown].firstItem);
+      openTabs(workspaceDropDown, newData[workspaceDropDown].firstItem);
     });
   });
-  $('#search_open').click(function() { // listener for when 'get' is clicked
-    workspaceDropDown = 'AdWordsExtensions';//$('#workspaceSelection').val();
-    console.log(workspaceDropDown);
-    chrome.storage.sync.get(workspaceDropDown, function(newData) {
+//  $('#search_open').click(function() { // listener for when 'get' is clicked
+  //  workspaceDropDown = 'AdWordsExtensions';//$('#workspaceSelection').val();
+  //  console.log('this is never called....' + workspaceDropDown);
+  //  chrome.storage.sync.get(workspaceDropDown, function(newData) {
       //console.log(newData);
       //var allKeys = Object.keys(newData);
       //console.log('allKeys ');
@@ -59,15 +59,22 @@ $(function() {
       //alert('The value is: ' + newData[getValue].firstItem); 
       //$('#tabs').empty();
       //$('#tabs').append(newData[workspaceDropDown].firstItem);
-      openTabs(newData[workspaceDropDown].firstItem);
-    });
-  });
+   //   openTabs(workspaceDropDown, newData[workspaceDropDown].firstItem);
+   // });
+ // });
 });
 
 // called by open button
-function openTabs(firstItem) {
+function openTabs(currentkey, firstItem) {
   chrome.windows.create(null, function (w) {
     var doc = $(firstItem);
+  //  console.log('this is the first item ' + firstItem)
+  //  console.log('currentkey is' + currentkey) // to save current name, you would do it here.
+  //  console.log(w.id)
+
+    // Save data to localStorage -- need to clear this still.
+    localStorage.setItem(w.id, currentkey);
+  //  console.log('the stored key is' + localStorage.getItem(w.id)) // doesn't seem to work across windows... 
     var links = $('a', doc); 
     for(var i=0;i<links.length;i++){
       chrome.tabs.create({windowId: w.id, //index: i, //this is where you could change to not have an empty tab
@@ -78,6 +85,10 @@ function openTabs(firstItem) {
 
 //called when popup opens to create workspace dropdown
 function createWorkspaceList() {
+//  chrome.windows.getCurrent(null, function(w) {
+ //   console.log('in createWorkspace and the id is ' + w.id)
+ //   console.log('the name already is: ' + localStorage.getItem(w.id))
+//  });
   var dropdown = chrome.storage.sync.get(null, function(data) {
     var keys = Object.keys(data);
     var options = $('select');
@@ -100,11 +111,18 @@ function createWorkspaceList() {
 function dumpAllTabs(query) {
   if (!query) {  // by default show the open tabs
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b style="font-size:12px; ">TABS OPEN IN CURRENT WINDOW:</b>')
-    var tabNames = chrome.tabs.getAllInWindow(
+   var tabNames = chrome.tabs.getAllInWindow(
         null, function(tabs) {
-        $('#tabs').append(dumpAllTabsNodes(tabs, query))
-    });
+     //     console.log('the current tabs are  named ' + tabs[0].windowId + localStorage.getItem(tabs[0].windowId));
+          if (localStorage.getItem(tabs[0].windowId) != null) {
+            $('#listingtitle').append('<b>Workspace name of current tabs: <i>' + localStorage.getItem(tabs[0].windowId) + '</i></b>')
+            $('#workspace').val(localStorage.getItem(tabs[0].windowId))
+          } else {
+            $('#listingtitle').append('<b style="font-size:12px; ">TABS OPEN IN CURRENT WINDOW:</b>')
+          }
+          $('#tabs').append(dumpAllTabsNodes(tabs, query))
+        }
+    );
    return;
   } else { //if a search 
    $('#listingtitle').empty();
@@ -124,7 +142,7 @@ function dumpSearch (currentkey, query) {
    chrome.storage.sync.get(currentkey, function(newData) {
     if (newData[currentkey].firstItem.toLowerCase().indexOf(query.toLowerCase()) != -1) { 
       inputButton = $('<input class="btn btn-outline-warning btn-sm" type="submit" value="Open" id="search_open"><br>')
-      inputButton.on('click',function () { searchOpener(newData[currentkey].firstItem)} )
+      inputButton.on('click',function () { searchOpener(currentkey, newData[currentkey].firstItem)} )
       $('#tabs').append(inputButton)
       $('#tabs').append('<b style="margin-left:5px;">' + currentkey + '<b>') //this is the workspace name
       $('#tabs').append(newData[currentkey].firstItem)
@@ -133,9 +151,9 @@ function dumpSearch (currentkey, query) {
    });
 }
 
-function searchOpener(tabsToOpen) {
-  console.log(tabsToOpen)
-  openTabs(tabsToOpen);
+function searchOpener(currentkey, tabsToOpen) {
+  console.log('tabstoOpen' + tabsToOpen)
+  openTabs(currentkey, tabsToOpen);
 
 }
 

@@ -102,6 +102,13 @@ function createWorkspaceList() {
 function displayAllOpenTabs(query) {
   var tabNames = chrome.tabs.getAllInWindow(
       null, function(tabs) {
+   //   console.log('the current tabs are  named ' + tabs[0].windowId + localStorage.getItem(tabs[0].windowId));
+      if (localStorage.getItem(tabs[0].windowId) != null) {
+        $('#tabs').append('<b>Workspace name of current tabs: <i>' + localStorage.getItem(tabs[0].windowId) + '</i></b>')
+
+      } else {
+        $('#tabs').append('<b style="font-size:12px; ">TABS OPEN IN CURRENT WINDOW:</b>')
+      }
       $('#tabs').append(createListOfTabs(tabs, query))
   });
 }
