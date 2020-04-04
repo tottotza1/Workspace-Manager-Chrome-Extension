@@ -6,9 +6,13 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="files/allWorkspaces.css">
     <link rel="stylesheet" href="./popup.css">
+    <link rel="stylesheet" href="./files/allWorkspaces.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/script.js"></script>
     <script src="popup.js"></script>
+    <script src="./files/allWorkspaces.js"></script>
     <title>Workspace Manager</title>
    
     <style>
@@ -22,6 +26,7 @@
 		 margin:0;	
 		 position:relative;
 		 width:450px;
+		 
 		 
 	   }
 	
@@ -80,46 +85,68 @@
   
  
 
-  <body  class="top">
+  <body class="top" ng-app="myapp" ng-controller="ctrl" ng-init="page='home'">
   
-     <div class="alert bg-primary" style="text-align:center; font-weight:bold; box-shadow:0px 1px 2px 0px rgba(0,0,0,.2); padding:7px 0px; margin:0"> <a href="popup.html" target="_self" style="font-weight:bold;text-decoration:none; color:white"> Workspace Manager </a> </div>
+	  <div class="alert bg-primary" style="text-align:center; font-weight:bold; box-shadow:0px 1px 2px 0px rgba(0,0,0,.2); padding:7px 0px; margin:0"> <a href="popup.html" target="_self" style="font-weight:bold;text-decoration:none; color:white"> Workspace Manager </a>
+	 
+	  <select ng-model="language" ng-change="save()" style="position:absolute; right:10px; text-transform:capitalize; font-size:12px; top:6px; width:80px; padding:2px 5px; height:24px;" class="form-control form-control-sm">
+	     <option value="{{key}}" ng-repeat="(key,value) in languages"> {{key}} </option>
+	  </select>
+	  
+	 </div>
+  
+   <div style="padding:5px 10px" ><img src="../images/WorkSpace_Icon.png" style="width:57px;">
+	   <a href="#" ng-show="page=='home'" hreff="./files/allWorkspaces.html"> 
+	   <button ng-click="page='showall'" class="btn btn-warning btn-sm" id="showall" style="float:right; min-width:100px;   max-width:none; width:auto;">{{l("Show All")}}</button>
+	   </a>
+	   
+	   <a href="#" ng-show="page=='showall'" hreff="./files/allWorkspaces.html"> 
+	   <button ng-click="page='home'" class="btn btn-warning btn-sm" id="showall" style="float:right; min-width:100px;   max-width:none; width:auto;">{{l("Back to Home")}}</button> 
+	   </a>
+   
+   
+   </div>
 
-    <div>
-	  <a href="./files/allWorkspaces.html"> <button class="btn btn-secondary btn-sm" id="showall" value="Show All" style="margin-right:25px; width:auto; float:lef;">Show All</button> </a>
-	</div>
-	  <div style="padding:0px 15px;">
-  <div><img src="../images/WorkSpace_Icon.png" style='width:57px;'></div>
-  
-    <div style="padding:0px;">
+    <div ng-show="page=='home'">
+    <div style="padding:10px; padding-top:0px;">
     <div class='section_one card'>
       <div class="table">
-        <div class="subtitle"> Saved Workspaces <br/></div>
+        <div class="subtitle"> {{l("Saved Workspaces")}} <br/></div>
         <div class="selectdiv">
           <div class="farleft" id='workspaceList'></div>
         </div>
         <div class="farright">
-		<input class="btn btn-outline-warning btn-sm" type="submit" value="Open" id="open"></div>
+		<input class="btn btn-outline-warning btn-sm" type="submit" value="{{l('Open')}}" id="open"></div>
       </div>
 
       <div class="table">
-        <div class="subtitle">Search all Saved Workspaces <br/></div>
+        <div class="subtitle"> {{l("Search all Saved Workspaces")}} <br/></div>
         <div class="selectdiv">
           <div class="farleft"><input class="inputdiv form-control"  id="search"></div>
         </div>
-        <div class="farright"><input class="btn btn-outline-warning btn-sm" type="submit" value="Search" id="searched"></div>
+        <div class="farright"><input class="btn btn-outline-warning btn-sm" type="submit" value="{{l('Search')}}" id="searched"></div>
       </div>
            
+      <div class="table_notopmargin hidden">
+          <div class="subtitle"> <span style="position:relative; top:10px;"> {{l("View and Delete Workspaces")}} </span>
+		  
+		  <input class="btn btn-outline-warning btn-sm" type="submit" style="margin-right:2px" value="{{l('Show All')}}" id="all"/>
+		  
+		  </div>
+		  
+		  
+      </div>
     </div>
 
     <div class="section_one">
       <div class="filler" style="margin:5px 0px; padding:8px 5px; border-radius:5px;"  >
-          <div class="subtitle" style="color:white; margin-bottom:3px; margin-top:0px;">Name the open tabs as a Workspace: <br/></div>
+          <div class="subtitle" style="color:white; margin-bottom:3px; margin-top:0px;">{{l("Name the open tabs as a Workspace:")}} <br/></div>
           <div class="farleft"><input class="form-control" id="workspace"></div>
-          <div class="farright"><input class="btn btn-warning btn-sm" style="margin-top:-1px;" type="submit" value="Save" id="save" /> </div>
+          <div class="farright"><input class="btn btn-warning btn-sm" style="margin-top:-1px;" type="submit" value="{{l('Save')}}" id="save" /> </div>
       </div>
     
 	<div class="card" style="padding:0px; color:#444;">
-      <div class="listingtitle"  id="listingtitle"></div>
+      <div class="listingtitle"  id="listingtitle" ></div>
       <div class="middle" id="tabs"></div>
       <div id="editdialog"></div>
       <div id="deletedialog"></div>
@@ -128,22 +155,43 @@
 
 
     </div>
-	
-	    <div class="footer" style="background-color:white; position:relative; margin-bottom:0px; padding:5px 10px;">
+	<div class="footer" style="background-color:white; position:relative; margin-bottom:0px; padding:5px 10px;">
       <div class="footerleft"><img src="images/WorkSpace_Icon.png" width="63px"></div>
-      <div class="footerright" style="position:relative; left:10px;">Are you a fan? 
+      <div class="footerright" style="position:relative; left:10px;">{{l("Are you a fan?")}} 
         <div class="ratings">
           <div class="YesLink">
-            <a href="https://chrome.google.com/webstore/detail/workspace-manager/cpfchfkodgnkhfmndmmkecbihmdahpia/reviews">Yes!</a>
+            <a href="https://chrome.google.com/webstore/detail/workspace-manager/cpfchfkodgnkhfmndmmkecbihmdahpia/reviews">{{l("Yes!")}}</a>
           </div>
           <div class="NoLink">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">No</a>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">{{l("No")}}</a>
           </div>
         </div>
 		
       </div>
-		 <div class="farright" style="position:absolute; right:10px; top:17px;"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">Provide Feedback/Report bugs</a></div>
+	  <div class="farright" style="position:absolute; right:10px; top:17px;"><a href="https://docs.google.com/forms/d/e/1FAIpQLSdY_HMJxVSw75LqtzUx1JbG-5XoCtvHdxySNPK-PxCgrVHcpQ/viewform">{{l("Provide Feedback/Report bugs")}}</a></div>
    
     </div>
+	</div>
+	
+	
+	<div ng-show="page=='showall'" class=".showall">
+<div style="padding:0px 15px;">
+  <div id="tabs_ac" class="card">{{l("CURRENTLY OPEN TABS")}}</div>
+  <div id="editdialog2"></div>
+  <div id="deletedialog2" title="{{l('Delete Workspace?')}}" class="dialog">
+  	<p style="padding:5px">{{l("This is not reversible. You will lose all tabs in the selected workspce if you contine. Are you sure you want to delete this workspace?")}}</p>
+  </div>
+  <div id='workspaceList2' style="margin-top:20px; font-weight:bold">{{l("LIST OF SAVED WORKSPACES")}} </div>
+  <div id='playground'></div>
+  
+  </div>	
+	
+	
+	
+	
+	
+	
+	
+	</div>
   </body>
 </html>

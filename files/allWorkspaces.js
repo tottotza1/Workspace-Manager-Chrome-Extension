@@ -1,6 +1,7 @@
 
 
 function displaySavedWorkspaces() { //get all workspaces that have been saved previously
+      $("#playground").html("");
 	var allWorkspaces = chrome.storage.sync.get(null, function(data){
 		var keys = Object.keys(data);
 		for (var i = 0; i<keys.length;i++){
@@ -13,12 +14,12 @@ function displayWorkspace(workspace) { //for a single workspace (with multiple t
 	console.log(workspace);
 	chrome.storage.sync.get(workspace, function(newData) { //get the tabs for the workspace name
 		var topDiv = $('<div class="card" style="margin:10px 0px;">'); //doing this so that 'delete' shows up under title, but then removes bullets as well.
-    var deleteLinkSpan = $('<span style="position:absolute; right:10px;"><a id="deletelink" style="color:darkgrey" ' + 'href="#">Delete Workspace</a></span>');
+    var deleteLinkSpan = $('<span style="position:absolute; right:10px;"><a id="deletelink" target="_self" class="lan" style="color:#888" ' + 'href="#">{{l("Delete Workspace")}}</a></span>');
     //options.show();
    
     deleteLinkSpan.click( function(event) { //this is called when link is clicked
 	       event.preventDefault();
-      $('#deletedialog').dialog( { // this is the overlay dialog box
+      $('#deletedialog2').dialog( { // this is the overlay dialog box
         autoOpen: false,
         resizable: false,
         draggable: false,
@@ -30,13 +31,15 @@ function displayWorkspace(workspace) { //for a single workspace (with multiple t
         },
         closeText: '&times;',
         buttons: {
-          'Yes, Delete!': function() {
+          '{{l("Yes, Delete!")}}': function() {
             chrome.storage.sync.remove(workspace, function() {
-            span.parent().remove();              	
+            span.parent().remove(); 
+                       $("#workspaceList").html("");
+		 createWorkspaceList();			
           });
           $(this).dialog('destroy');
         },
-        'Cancel': function() {
+        '{{l("Cancel")}}': function() {
           $(this).dialog('destroy');
           }  //need to set focus
         }
@@ -55,36 +58,16 @@ function displayWorkspace(workspace) { //for a single workspace (with multiple t
     topDiv.append(deleteLinkSpan);
   	topDiv.append(newData[workspace].firstItem); //display the tabs
     if (newData[workspace].createdDate != undefined ) { //this is to accommodate users from before feature was implemented
-      topDiv.append('<span class="text-info"> Created: ' + newData[workspace].createdDate + '</span>');
+      topDiv.append('<span class="text-info lan"> {{l("Created:")}} ' + newData[workspace].createdDate + '</span>');
     }
-    inputButton = $('<input class="btn btn-outline-warning btn-sm" type="submit" value="Open" id="search_open">');
-    inputButton.on('click', function () { searchOpener(newData[workspace].firstItem)})
-    topDiv.append(inputButton);
-    topDiv.append('</div>')
-
-    //topDiv.append('')
+    topDiv.append('<div style="margin:5px 0px 5px 5px; width:100%"><button class="btn btn-outline-warning btn-block btn-sm search_open lan" style="margin-top:-0px" type="submit" v="'+workspace+'"> {{l(\'Open\')}} </button> </div>');
+    topDiv.append('</div>');
+    topDiv.append('')
   	$('#playground').append(topDiv);
   })
 }
 
-function searchOpener(tabsToOpen) {
-  console.log(tabsToOpen)
-  openTabs(tabsToOpen);
-
-}
-
-// called by open button
-function openTabs(firstItem) {
-  chrome.windows.create(null, function (w) {
-    var doc = $(firstItem);
-    var links = $('a', doc); 
-    for(var i=0;i<links.length;i++){
-      chrome.tabs.create({windowId: w.id, //index: i, //this is where you could change to not have an empty tab
-                          url: links[i].href});
-    }
-  });
-}
-
+/*
 //called when popup opens to create workspace dropdown
 function createWorkspaceList() {
   var dropdown = chrome.storage.sync.get(null, function(data) {
@@ -96,34 +79,27 @@ function createWorkspaceList() {
     return options;
   })
   $('#workspaceList').append('<select id=\'myId\'>' + dropdown);
-}
+} */
 
 // retrieves all currently open tabs and then lists them in the page under the 'tabs'
 function displayAllOpenTabs(query) {
   var tabNames = chrome.tabs.getAllInWindow(
       null, function(tabs) {
-   //   console.log('the current tabs are  named ' + tabs[0].windowId + localStorage.getItem(tabs[0].windowId));
-      if (localStorage.getItem(tabs[0].windowId) != null) {
-        $('#tabs').append('<b>Workspace name of current tabs: <i>' + localStorage.getItem(tabs[0].windowId) + '</i></b>')
-
-      } else {
-        $('#tabs').append('<b style="font-size:12px; ">TABS OPEN IN CURRENT WINDOW:</b>')
-      }
-      $('#tabs').append(createListOfTabs(tabs, query))
+      $('#tabs_ac').append(createListOfTabs2(tabs, query))
   });
 }
 
 // iterates through each tab and calls dumpTab for each
-function createListOfTabs(tabs, query) {
+function createListOfTabs2(tabs, query) {
   var list = $('<ul>');
   for (var i = 0; i < tabs.length; i++) {
-    list.append(dumpTab(tabs[i],query) );  
+    list.append(dumpTab2(tabs[i],query) );  
   }
   return list;
 }
 
 // this lists out a line item for a tab and creates the html around it for the popup
-function dumpTab(tabNode, query) {
+function dumpTab2(tabNode, query) {
   if (tabNode.title) {
     if (query && !tabNode.children) { //if there is a query and there are no children
       if (String(tabNode.title).indexOf(query) == -1) {
@@ -146,7 +122,7 @@ function dumpTab(tabNode, query) {
     //Clicking on a tab in the extension, fires with a new tab with the url
     anchor.click(function(){
       
-	  chrome.tabs.create({url: tabNode.url});
+	  //chrome.tabs.create({url: tabNode.url});
     });
 
      // none of this span stuff is needed currently -- RE ADD IF WANT TO ADD OPTIONS DURING HOVERING/ / /
@@ -177,15 +153,56 @@ function dumpTab(tabNode, query) {
   return li;
 }
 
+/*
 $(document).on("click","a.urlLink",function(){
 	var  t = $(this);
 	   
 	   if(t.attr("target")!="_blank"){
 chrome.tabs.create({url:t.attr("href")});
 	   }
-})
+}) */
 
 document.addEventListener('DOMContentLoaded', function () {
   displayAllOpenTabs();
   displaySavedWorkspaces();
 });
+
+
+/*
+
+
+function clickEventShow(workspaceDropDown){
+	console.log(workspaceDropDown);
+    chrome.storage.sync.get(workspaceDropDown, function(newData) {
+      //console.log(newData);
+      //var allKeys = Object.keys(newData);
+      //console.log('allKeys ');
+      //console.log(allKeys);
+      //console.log(newData[workspaceDropDown]);
+      //alert('The value is: ' + newData[getValue].firstItem); 
+      //$('#tabs').empty();
+      //$('#tabs').append(newData[workspaceDropDown].firstItem);
+      openTabs(newData[workspaceDropDown].firstItem);
+    });
+}
+
+
+
+$(document).on("click",".search_open",function(){
+	
+	 clickEventShow($(this).attr("v"));
+})
+
+
+// called by open button
+function openTabs(firstItem) {
+  chrome.windows.create(null, function (w) {
+    var doc = $(firstItem);
+    var links = $('a', doc); 
+    for(var i=0;i<links.length;i++){
+      chrome.tabs.create({windowId: w.id, //index: i, //this is where you could change to not have an empty tab
+                          url: links[i].href});
+    }
+  });
+}
+*/

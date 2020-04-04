@@ -69,6 +69,9 @@ Done:
 * 0.903
 * Added memory of workspace names
 
+* 0.950
+* added language support
+
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
 To Do

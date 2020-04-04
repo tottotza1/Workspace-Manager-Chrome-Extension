@@ -35,6 +35,13 @@ $(function() {
   $('#open').click(function() { // listener for when 'get' is clicked
     workspaceDropDown = $('#workspaceSelection').val();
     console.log(workspaceDropDown);
+    clickEventShow(workspaceDropDown);
+  });
+});
+
+
+function clickEventShow(workspaceDropDown){
+	console.log(workspaceDropDown);
     chrome.storage.sync.get(workspaceDropDown, function(newData) {
       //console.log(newData);
       //var allKeys = Object.keys(newData);
@@ -46,7 +53,6 @@ $(function() {
       //$('#tabs').append(newData[workspaceDropDown].firstItem);
       openTabs(workspaceDropDown, newData[workspaceDropDown].firstItem);
     });
-  });
 //  $('#search_open').click(function() { // listener for when 'get' is clicked
   //  workspaceDropDown = 'AdWordsExtensions';//$('#workspaceSelection').val();
   //  console.log('this is never called....' + workspaceDropDown);
@@ -62,7 +68,11 @@ $(function() {
    //   openTabs(workspaceDropDown, newData[workspaceDropDown].firstItem);
    // });
  // });
-});
+}
+$(document).on("click",".search_open",function(){
+	
+	 clickEventShow($(this).attr("v"));
+})
 
 // called by open button
 function openTabs(currentkey, firstItem) {
@@ -89,19 +99,19 @@ function createWorkspaceList() {
  //   console.log('in createWorkspace and the id is ' + w.id)
  //   console.log('the name already is: ' + localStorage.getItem(w.id))
 //  });
+	var select = $('<select class="form-control" style="text-align-last:center" id="workspaceSelection"></select>');
   var dropdown = chrome.storage.sync.get(null, function(data) {
     var keys = Object.keys(data);
-    var options = $('select');
     for (var i = 0; i< keys.length; i++) {
-      options.append('<option>' + keys[i]);
+      select.append('<option>' + keys[i] +"</option>");
     }
-    return options;
   })
-  $('#workspaceList').append('<select class="form-control" style="text-align-last:center" id=\'workspaceSelection\'>' + dropdown);
+  
+  $('#workspaceList').append(select);
   
    setTimeout(function(){
     if(!$("#workspaceSelection option").length){
-		$("#workspaceSelection").append("<option> Nothing found.</option>");
+		$("#workspaceSelection").append("<option class='lan'> {{l('Nothing found.')}}</option>");
 		}
    },100);
 	}
@@ -111,6 +121,7 @@ function createWorkspaceList() {
 function dumpAllTabs(query) {
   if (!query) {  // by default show the open tabs
    $('#listingtitle').empty();
+   //$('#listingtitle').append('<b style="font-size:12px;" class="lan"> {{l("TABS OPEN IN CURRENT WINDOW:")}}</b>')
    var tabNames = chrome.tabs.getAllInWindow(
         null, function(tabs) {
      //     console.log('the current tabs are  named ' + tabs[0].windowId + localStorage.getItem(tabs[0].windowId));
@@ -126,7 +137,7 @@ function dumpAllTabs(query) {
    return;
   } else { //if a search 
    $('#listingtitle').empty();
-   $('#listingtitle').append('<b>SEARCH RESULTS:</b>')
+   $('#listingtitle').append('<b class="lan" style=""> {{l("SEARCH RESULTS:")}}</b>')
    var allWorkspaces = chrome.storage.sync.get(
         null, function(data) {
           var keys = Object.keys(data);
@@ -146,7 +157,6 @@ function dumpSearch (currentkey, query) {
       $('#tabs').append(inputButton)
       $('#tabs').append('<b style="margin-left:5px;">' + currentkey + '<b>') //this is the workspace name
       $('#tabs').append(newData[currentkey].firstItem)
-
     }
    });
 }
@@ -222,8 +232,8 @@ function dumpTab(tabNode, query) {
 // function called to save a workspace
 function saveChanges() {
   var workspaceName = $('#workspace').val();
-  if (!workspaceName) {  // Check that there's some text there. 
-    customAlert('Error: No value specified');
+  if (!workspaceName) {  // Check that there's some text there. should never get here
+    customAlert('{{l("Error: No value specified")}}');
     return;
   }
 
@@ -238,7 +248,31 @@ function saveChanges() {
   
   chrome.storage.sync.get(workspaceName, function(data) { // didn't work to include the below here because it is a callback
     if ((Object.keys(data)).length != 0) {
-      customAlert('Workspace already exists, overwriting currently is not supported. Existing Workspaces can be deleted via the Show All Tabs page');
+      
+	   $('<div style="padding:10px;" class="lan" title="\{\{l\(\'WARNING!\'\)\}\}" />').html("{{l('Workspace already exists. Do you want to overwrite it? This is NOT reversible')}}").dialog( { 
+        autoOpen: false,
+        resizable: false,
+        draggable: false,
+        position: { my: "center top", at: "center top+50", of: window },
+        modal: true,
+        overlay: {
+          backgroundColor: 'white',
+          opacity: 1.0
+        },
+        closeText: '&times;',
+        buttons: {
+         '{{l("Yes, Confirm!")}}': function() {
+             chrome.storage.sync.remove(workspaceName);
+			  saveChanges();
+			  $(this).dialog('destroy');
+          },
+		  '{{l("Cancel")}}': function(){
+			  $(this).dialog('destroy');
+		  }
+        }
+      }).dialog('open');
+	  
+	  
       return;
     } else {   
       //create object with key/value
@@ -254,8 +288,13 @@ function saveChanges() {
       });
       $('#save').val('Saved!');   // in future, need to remove functionality of button too
      
-	   window.location.reload();
-
+	   //window.location.reload();
+         $("#workspaceList").html("");
+		 $("#workspace").val("");
+		 createWorkspaceList();
+		 displaySavedWorkspaces();
+		 
+		 
     }
   })   
 }
@@ -269,7 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
  function customAlert(text){
 	 
-	  $('<div style="padding:10px;" title="Error" />').html(text).dialog( { // this is the overlay dialog box
+	  $('<div style="padding:10px;" title="\{\{l\(\'Error\'\)\}\}" class="lan" />').html(text).dialog( { // this is the overlay dialog box
         autoOpen: false,
         resizable: false,
         draggable: false,
@@ -281,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         closeText: '&times;',
         buttons: {
-         'OK': function() {
+         '{{l("OK")}}': function() {
           $(this).dialog('destroy');
           }  //need to set focus
         }
