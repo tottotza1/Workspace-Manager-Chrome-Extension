@@ -29,6 +29,8 @@ Done:
 * update background logo
 * updated Delete dialog box
 * new design/layout/color scheme
+* Easier way to overwrite an existing workspace
+
  
 * 0.75
 * Removed ovewrwrite of workspace. Must go to Show all and delete first
@@ -69,14 +71,13 @@ Done:
 * 0.903
 * Added memory of workspace names
 
-* 0.950
-* added language support
+* 0.951
+* added language support, added angular
 
 imagine a 'delicious' or 'instapaper' like site for your projects.
 
 To Do
 * change search to search extension lists?
-* Easier way to overwrite an existing workspace
 * Create history of workspaces (for how long?)
 * Ability to share a workspace (how?)
 * add ability to select individual tab in show all tabs
